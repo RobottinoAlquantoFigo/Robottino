@@ -83,10 +83,11 @@ while 1:
     x2, y2, angle = rotation(x2, y2, angle, r, x1, y1)
 
     if x2-x1 == 0:
-        m = 0
+        m = 1
+        q = 0
     else:
         m = (y2-y1)/(x2-x1)
-    q = y1-(m*x1)
+        q = y1-(m*x1)
     
     if y == (m*x + q) or y == (m*x + q) + 1 or y == (m*x + q) - 1:
         if x >= x1 and x <= x2 and y >= y1 and y <= y2:
