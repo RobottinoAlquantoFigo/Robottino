@@ -40,7 +40,7 @@ def rotation(x, y, angle, r, x1, y1):
     
     x = (x1) + r * math.cos(math.radians(angle))
     y = (y1) + r * math.sin(math.radians(angle))
-    angle += 1
+    angle += 0.5
 
     if angle > 360:
         angle -= 360
@@ -81,15 +81,16 @@ while 1:
     pygame.draw.line(screen, (255, 255, 255), (x1, y1), (x2, y2), 1)
 
     x2, y2, angle = rotation(x2, y2, angle, r, x1, y1)
-
+    
     if x2-x1 == 0:
         m = 1
     else:
         m = (y2-y1)/(x2-x1)
     q = y1-(m*x1)
     
-    if y == (m*x + q) or y == (m*x + q) + 1 or y == (m*x + q) - 1:
-        if x >= x1 and x <= x2 and y >= y1 and y <= y2:
+    if y >= (m*x + q) - 1 and y <= (m*x + q) + 1:
+        if ((x >= x1 and x <= x2) or (x >= x2 and x <= x1)) and (
+            (y >= y1 and y <= y2) or (y >= y2 and x <= y1)):
             pygame.quit()
             quit()
 ##            n += 1
@@ -98,6 +99,11 @@ while 1:
     if x >= xr and x <= xr + w and y >= yr and y <= yr + h:
         pygame.quit
         quit()
+
+    print("x : " + str(x))
+    print("y : " + str(y))
+    print("x2: " + str(int(x2)))
+    print("y2: " + str(int(y2)))
         
     pygame.display.update()
     screen.fill((0, 0, 0))
