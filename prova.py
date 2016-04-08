@@ -7,19 +7,19 @@ height = 600
 size = (width, height)
 
 screen = pygame.display.set_mode(size)
-pygame.display.set_caption('Robottino')
+pygame.display.set_caption('rotazione')
 clock = pygame.time.Clock()
 
-x = 200
-y = 150
+x = 400
+y = 300
 
 xr = 20
 yr = 20
 w = 100
 h = 50
 
-x1 = 400
-y1 = 300
+x1 = 150
+y1 = 150
 x2 = 250
 y2 = 300
 x3 = 360
@@ -28,7 +28,6 @@ y3 = 120
 r = math.sqrt((x2-x1)**2 + (y2-y1)**2)
 
 angle = 0
-angle2 = 100
 n = 0
 
 pixAr = pygame.PixelArray(screen)
@@ -47,8 +46,6 @@ def rotation(x, y, angle, r, x1, y1):
         angle -= 360
 
     return x, y, angle
-
-x2, y2, angle = rotation(x2, y2, angle, r, x1, y1)
 
 while 1:
     for event in pygame.event.get():
@@ -79,14 +76,12 @@ while 1:
     
     pixAr[x][y] = (255, 255, 255)
 
-    pygame.draw.line(screen, (255, 255, 255), (x1, y1), (x2, y2), 1)
-    pygame.draw.line(screen, (255, 255, 255), (x2, y2), (x3, y3), 1)
+    pygame.draw.rect(screen, (255, 255, 255), (xr, yr, w, h))
 
-    if angle2 == 360:
-        x2, y2, angle = rotation(x2, y2, angle, r, x1, y1)
-        
-    x3, y3, angle2 = rotation(x3, y3, angle2, r, x2, y2)
-            
+    pygame.draw.line(screen, (255, 255, 255), (x1, y1), (x2, y2), 1)
+
+    x2, y2, angle = rotation(x2, y2, angle, r, x1, y1)
+    
     if x2-x1 == 0:
         m = 1
     else:
@@ -100,18 +95,10 @@ while 1:
             quit()
 ##            n += 1
 ##            print("Collisione n° %d" %(n))
-
-    if x3-x2 == 0:
-        m2 = 1
-    else:
-        m2 = (y3-y2)/(x3-x2)
-    q2 = y2-(m2*x2)
-    
-    if y >= (m2*x + q2) - 1 and y <= (m2*x + q2) + 1:
-        if ((x >= x2 and x <= x3) or (x >= x3 and x <= x2)) and (
-            (y >= y2 and y <= y3) or (y >= y3 and x <= y2)):
-            pygame.quit()
-            quit()
+        
+    if x >= xr and x <= xr + w and y >= yr and y <= yr + h:
+        pygame.quit
+        quit()
 
     print("x : " + str(x))
     print("y : " + str(y))
