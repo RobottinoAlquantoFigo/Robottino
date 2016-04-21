@@ -18,18 +18,33 @@ yr = 200
 w = 100
 h = 50
 
-x1 = 400 # primo punto prima linea
+x1 = 400
 y1 = 300
-x2 = 250 # secondo punto prima linea e primo punto seconda linea
-y2 = 300
-x3 = 350 # secondo punto seconda linea
-y3 = 300
+x2 = 0
+y2 = 0
+x3 = 0
+y3 = 0
+x4 = 0
+y4 = 0
+x5 = 0
+y5 = 0
+x6 = 0
+y6 = 0
 
-r = math.sqrt((x2-x1)**2 + (y2-y1)**2)
-r1 = math.sqrt((x3-x2)**2 + (y3-y1)**2)
+r1c = 20
+r1l = 100
+r2c = 20
+r2l = 75
 
-angle = 0 # angolo prima linea
-angle2 = 0 # angolo seconda linea
+angle1 = 90
+angle2 = 270
+angle3 = math.degrees(math.atan(r1c/r1l))
+angle4 = math.degrees(math.atan(-r1c/r1l))
+angle5 = 90
+angle6 = 270
+angle7 = math.degrees(math.atan(r2c/r2l))
+angle8 = math.degrees(math.atan(-r2c/r2l))
+
 n = 0 # contatore a caso
 
 pixAr = pygame.PixelArray(screen) # creazione punto
@@ -84,7 +99,7 @@ def line_collision(m1, q1, m2, q2):
         n += 1
         print("Collisione linea n° %d" %(n))
 
-x2, y2, angle = rotation(x2, y2, angle, r, x1, y1)
+##x2, y2, angle = rotation(x2, y2, angle, r, x1, y1)
 
 while 1: 
     for event in pygame.event.get(): # clicco la x per chiudere il programma
@@ -116,13 +131,20 @@ while 1:
     pixAr[x][y] = (255, 255, 255)# disegna il punto 
 
     # digno le due linee (colore cordinate spessore)
-    pygame.draw.line(screen, (255, 255, 255), (x1, y1), (x2, y2), 1)  
-    pygame.draw.line(screen, (255, 255, 255), (x2, y2), (x3, y3), 1) 
+    pygame.draw.line(screen, (255, 255, 255), (x2, y2), (x3, y3), 1)
+    pygame.draw.line(screen, (255, 255, 255), (x2, y2), (x4, y4), 1)
+    pygame.draw.line(screen, (255, 255, 255), (x3, y3), (x5, y5), 1)
+    pygame.draw.line(screen, (255, 255, 255), (x4, y4), (x5, y5), 1)
+    pygame.draw.line(screen, (255, 255, 255), (x4, y4), (x3, y3), 1)
+    pygame.draw.line(screen, (255, 255, 255), (x5, y5), (x2, y2), 1)
+    pygame.draw.line(screen, (255, 255, 255), (x6, y6), (x, y), 1) 
 
-    if angle2 == 360: # se la seconda linea completa un giro
-        x2, y2, angle = rotation(x2, y2, angle, r, x1, y1) # ruoto la prima linea
-        
-    x3, y3, angle2 = rotation(x3, y3, angle2, r1, x2, y2) # ruoto la seconda linea
+##    if angle2 == 360: # se la seconda linea completa un giro
+    x2, y2, angle1 = rotation(x2, y2, angle1, r1c, x1, y1)
+    x3, y3, angle2 = rotation(x3, y3, angle2, r1c, x1, y1)
+    x4, y4, angle3 = rotation(x4, y4, angle3, r1l, x1, y1)
+    x5, y5, angle4 = rotation(x5, y5, angle4, r1l, x1, y1)
+    x6, y6, angle5 = rotation(x6, y6, angle5, r1l, x1, y1)
 
     # coefficienti angolari e collisioni delle linee
 
@@ -136,6 +158,7 @@ while 1:
 
     check_collision(m2, q2, x, y, x2, y2, x3, y3)
 
+    # ostacolo
     triangle((xr, yr), (xr+100, yr), (xr, yr+100))
 
     # prima linea primo ostacolo
