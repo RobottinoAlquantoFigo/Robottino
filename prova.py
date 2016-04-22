@@ -38,9 +38,9 @@ x9 = 0
 y9 = 0
 
 r1c = 20
-r1l = 100
+r1l = 200
 r2c = 20
-r2l = 75
+r2l = 150
 
 angle1 = 90
 angle2 = 270
@@ -95,10 +95,24 @@ def check_collision(m, q, x, y, x1, y1, x2, y2):
             n += 1
             print("Collisione n° %d" %(n))
 
-def collision():
+def collision(yt, xt, m, q, yo1, yo2, yo3):
     global n
 
-    pass
+    a = 0
+    b = ""
+    if yo1 >= m*xt + q:
+        a += 1
+        b += "1 "
+        n += 1
+    if yo2 >= m*xt + q:
+        a += 1
+        b += "2 "
+        n += 1
+    if yo3 >= m*xt + q:
+        a += 1
+        b += "3"
+        n += 1
+    return a, b
 
 x2, y2, angle1 = rotation(x2, y2, angle1, r1c, x1, y1)
 x3, y3, angle2 = rotation(x3, y3, angle2, r1c, x1, y1)
@@ -192,7 +206,11 @@ while 1:
     m5, q5 = retta(xr, yr+100, xr, yr)
 
     check_collision(m5, q5, x, y, xr, yr+100, xr, yr)
-        
+
+    a, b = collision(y4, x2, m1, q1, yr, yr, yr+100)
+    if a > 0:
+        print(str(n) + " " + str(a) + " " + b)
+    
     pygame.display.update() 
     screen.fill((0, 0, 0))
 
