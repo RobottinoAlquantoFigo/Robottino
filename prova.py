@@ -30,6 +30,12 @@ x5 = 0
 y5 = 0
 x6 = 0
 y6 = 0
+x7 = 0
+y7 = 0
+x8 = 0
+y8 = 0
+x9 = 0
+y9 = 0
 
 r1c = 20
 r1l = 100
@@ -89,18 +95,16 @@ def check_collision(m, q, x, y, x1, y1, x2, y2):
             n += 1
             print("Collisione n° %d" %(n))
 
-def line_collision(m1, q1, m2, q2):
+def collision():
     global n
 
-    y1 = m1*x + q1
-    y2 = m2*x + q2
+    pass
 
-    if y1 - 1 >= y2 and y1 + 1 <= y2:
-        n += 1
-        print("Collisione linea n° %d" %(n))
-
-##x2, y2, angle = rotation(x2, y2, angle, r, x1, y1)
-
+x2, y2, angle1 = rotation(x2, y2, angle1, r1c, x1, y1)
+x3, y3, angle2 = rotation(x3, y3, angle2, r1c, x1, y1)
+x4, y4, angle3 = rotation(x4, y4, angle3, r1l, x1, y1)
+x5, y5, angle4 = rotation(x5, y5, angle4, r1l, x1, y1)
+        
 while 1: 
     for event in pygame.event.get(): # clicco la x per chiudere il programma
         if event.type == pygame.QUIT:
@@ -127,24 +131,37 @@ while 1:
 
     x += dx # inc punto x
     y += dy # inc punto y
+
+    x0 = (x4+x5)/2
+    y0 = (y4+y5)/2
     
     pixAr[x][y] = (255, 255, 255)# disegna il punto 
 
-    # digno le due linee (colore cordinate spessore)
+    # disegno le linee del primo braccio (colore cordinate spessore)
     pygame.draw.line(screen, (255, 255, 255), (x2, y2), (x3, y3), 1)
     pygame.draw.line(screen, (255, 255, 255), (x2, y2), (x4, y4), 1)
     pygame.draw.line(screen, (255, 255, 255), (x3, y3), (x5, y5), 1)
     pygame.draw.line(screen, (255, 255, 255), (x4, y4), (x5, y5), 1)
     pygame.draw.line(screen, (255, 255, 255), (x4, y4), (x3, y3), 1)
-    pygame.draw.line(screen, (255, 255, 255), (x5, y5), (x2, y2), 1)
-    pygame.draw.line(screen, (255, 255, 255), (x6, y6), (x, y), 1) 
 
-##    if angle2 == 360: # se la seconda linea completa un giro
-    x2, y2, angle1 = rotation(x2, y2, angle1, r1c, x1, y1)
-    x3, y3, angle2 = rotation(x3, y3, angle2, r1c, x1, y1)
-    x4, y4, angle3 = rotation(x4, y4, angle3, r1l, x1, y1)
-    x5, y5, angle4 = rotation(x5, y5, angle4, r1l, x1, y1)
-    x6, y6, angle5 = rotation(x6, y6, angle5, r1l, x1, y1)
+    # disegno le linne del secondo braccio (colore cordinate spessore)
+    
+    pygame.draw.line(screen, (255, 255, 255), (x6, y6), (x7, y7), 1)
+    pygame.draw.line(screen, (255, 255, 255), (x6, y6), (x8, y8), 1)
+    pygame.draw.line(screen, (255, 255, 255), (x7, y7), (x9, y9), 1)
+    pygame.draw.line(screen, (255, 255, 255), (x8, y8), (x9, y9), 1)
+    pygame.draw.line(screen, (255, 255, 255), (x8, y8), (x7, y7), 1)
+
+    if angle5 == 360: # se la seconda linea completa un giro
+        x2, y2, angle1 = rotation(x2, y2, angle1, r1c, x1, y1)
+        x3, y3, angle2 = rotation(x3, y3, angle2, r1c, x1, y1)
+        x4, y4, angle3 = rotation(x4, y4, angle3, r1l, x1, y1)
+        x5, y5, angle4 = rotation(x5, y5, angle4, r1l, x1, y1)
+
+    x6, y6, angle5 = rotation(x6, y6, angle5, r2c, x0, y0)
+    x7, y7, angle6 = rotation(x7, y7, angle6, r2c, x0, y0)
+    x8, y8, angle7 = rotation(x8, y8, angle7, r2l, x0, y0)
+    x9, y9, angle8 = rotation(x9, y9, angle8, r2l, x0, y0)
 
     # coefficienti angolari e collisioni delle linee
 
