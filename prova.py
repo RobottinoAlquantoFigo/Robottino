@@ -13,21 +13,23 @@ clock = pygame.time.Clock()
 x = 200 # x e y del punto
 y = 150
 
-xr = 300 # dimensioni e posizione del rettangolo
-yr = 200
-w = 100
-h = 50
+xo1 = 300
+yo1 = 200
+xo2 = 400
+yo2 = 200
+xo3 = 300
+yo3 = 300
 
 x1 = 400
 y1 = 300
-x2 = 0
-y2 = 0
-x3 = 0
-y3 = 0
-x4 = 0
-y4 = 0
-x5 = 0
-y5 = 0
+x2 = 400
+y2 = 320
+x3 = 400
+y3 = 280
+x4 = 600
+y4 = 320
+x5 = 600
+y5 = 280
 x6 = 0
 y6 = 0
 x7 = 0
@@ -60,13 +62,14 @@ dx = 0 # spostamento punto
 dy = 0
 
 def rotation(x, y, angle, r, x1, y1): # definisco funzione rotation 
-    
-    x = (x1) + r * math.cos(math.radians(angle)) 
-    y = (y1) + r * math.sin(math.radians(angle))
-    angle += 1
+
+    angle += 10
 
     if angle > 360: # stop a 360° torna indetro 
         angle -= 360
+
+    x = (x1) + r * math.cos(math.radians(angle)) 
+    y = (y1) + r * math.sin(math.radians(angle))
 
     return x, y, angle # ritorna i valori x, y, angolo
 
@@ -95,29 +98,39 @@ def check_collision(m, q, x, y, x1, y1, x2, y2):
             n += 1
             print("Collisione n° %d" %(n))
 
-def collision(yt, xt, m, q, yo1, yo2, yo3):
+def collision(xt, m, q, yo1, yo2, yo3, xo1, xo2, xo3, angle):
     global n
-
+    
     a = 0
     b = ""
-    if yo1 >= m*xt + q:
-        a += 1
-        b += "1 "
-        n += 1
-    if yo2 >= m*xt + q:
-        a += 1
-        b += "2 "
-        n += 1
-    if yo3 >= m*xt + q:
-        a += 1
-        b += "3"
-        n += 1
+    if angle <= 270 and angle >= 90:
+        if yo1 >= m*xo1 + q:
+            a += 1
+            b += "1 "
+            n += 1
+        if yo2 >= m*xo2 + q:
+            a += 1
+            b += "2 "
+            n += 1
+        if yo3 >= m*xo3 + q:
+            a += 1
+            b += "3"
+            n += 1
+    if ((angle <= 360 and angle >= 270) or
+        (angle >= 0 and angle < 90)):
+        if yo1 <= m*xo1 + q:
+            a += 1
+            b += "1 "
+            n += 1
+        if yo2 <= m*xo2 + q:
+            a += 1
+            b += "2 "
+            n += 1
+        if yo3 <= m*xo3 + q:
+            a += 1
+            b += "3"
+            n += 1
     return a, b
-
-x2, y2, angle1 = rotation(x2, y2, angle1, r1c, x1, y1)
-x3, y3, angle2 = rotation(x3, y3, angle2, r1c, x1, y1)
-x4, y4, angle3 = rotation(x4, y4, angle3, r1l, x1, y1)
-x5, y5, angle4 = rotation(x5, y5, angle4, r1l, x1, y1)
         
 while 1: 
     for event in pygame.event.get(): # clicco la x per chiudere il programma
@@ -146,6 +159,16 @@ while 1:
     x += dx # inc punto x
     y += dy # inc punto y
 
+    if x <= 0:
+        x = width - 1
+    elif x >= width - 1:
+        x = 1
+
+    if y <= 0:
+        y = height - 1
+    elif y >= height - 1:
+        y = 1
+
     x0 = (x4+x5)/2
     y0 = (y4+y5)/2
     
@@ -165,7 +188,7 @@ while 1:
     pygame.draw.line(screen, (255, 255, 255), (x7, y7), (x9, y9), 1)
     pygame.draw.line(screen, (255, 255, 255), (x8, y8), (x9, y9), 1)
     pygame.draw.line(screen, (255, 255, 255), (x8, y8), (x7, y7), 1)
-
+    
     if angle5 == 360: # se la seconda linea completa un giro
         x2, y2, angle1 = rotation(x2, y2, angle1, r1c, x1, y1)
         x3, y3, angle2 = rotation(x3, y3, angle2, r1c, x1, y1)
@@ -177,39 +200,40 @@ while 1:
     x8, y8, angle7 = rotation(x8, y8, angle7, r2l, x0, y0)
     x9, y9, angle8 = rotation(x9, y9, angle8, r2l, x0, y0)
 
-    # coefficienti angolari e collisioni delle linee
+    # coefficienti angolari e collisioni del braccio
 
     # linea 1
-    m1, q1 = retta(x1, y1, x2, y2)
+    m1, q1 = retta(x2, y2, x3, y3)
 
-    check_collision(m1, q1, x, y, x1, y1, x2, y2)
+    check_collision(m1, q1, x, y, x2, y2, x3, y3)
 
     # linea 2
-    m2, q2 = retta(x2, y2, x3, y3)
+    m2, q2 = retta(x3, y3, x4, y4)
 
-    check_collision(m2, q2, x, y, x2, y2, x3, y3)
+    check_collision(m2, q2, x, y, x3, y3, x4, y4)
 
     # ostacolo
-    triangle((xr, yr), (xr+100, yr), (xr, yr+100))
+    triangle((xo1, yo1), (xo2, yo2), (xo3, yo3))
 
     # prima linea primo ostacolo
-    m3, q3 = retta(xr, yr, xr+100, yr)
+    m3, q3 = retta(xo1, yo1, xo2, yo2)
 
-    check_collision(m3, q3, x, y, xr, yr, xr+100, yr)
+    check_collision(m3, q3, x, y, xo1, yo1, xo2, yo2)
 
     # seconda linea primo ostacolo
-    m4, q4 = retta(xr+100, yr, xr, yr+100)
+    m4, q4 = retta(xo2, yo2, xo3, yo3)
 
-    check_collision(m4, q4, x, y, xr+100, yr, xr, yr+100)
+    check_collision(m4, q4, x, y, xo2, yo2, xo3, yo3)
 
     # terza linea primo ostacolo
-    m5, q5 = retta(xr, yr+100, xr, yr)
+    m5, q5 = retta(xo3, yo3, xo1, yo1)
 
-    check_collision(m5, q5, x, y, xr, yr+100, xr, yr)
-
-    a, b = collision(y4, x2, m1, q1, yr, yr, yr+100)
+    check_collision(m5, q5, x, y, xo3, yo3, xo1, yo1)
+    
+    a, b = collision(x2, m1, q1, yo1, yo2, yo3, xo1, xo2, xo3, angle1)
     if a > 0:
         print(str(n) + " " + str(a) + " " + b)
+        print(angle1)
     
     pygame.display.update() 
     screen.fill((0, 0, 0))
