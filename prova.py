@@ -20,6 +20,13 @@ yo2 = 200
 xo3 = 300
 yo3 = 300
 
+##xo1 = 401
+##yo1 = 301
+##xo2 = 410
+##yo2 = 310
+##xo3 = 401
+##yo3 = 310
+
 x1 = 400
 y1 = 300
 x2 = 400
@@ -98,7 +105,7 @@ def check_collision(m, q, x, y, x1, y1, x2, y2):
             n += 1
             print("Collisione n° %d" %(n))
 
-def collision(xt, m, q, yo1, yo2, yo3, xo1, xo2, xo3, angle):
+def collision(m, q, yo1, yo2, yo3, xo1, xo2, xo3, angle):
     global n
     
     a = 0
@@ -114,7 +121,7 @@ def collision(xt, m, q, yo1, yo2, yo3, xo1, xo2, xo3, angle):
             n += 1
         if yo3 >= m*xo3 + q:
             a += 1
-            b += "3"
+            b += "3 "
             n += 1
     if ((angle <= 360 and angle >= 270) or
         (angle >= 0 and angle < 90)):
@@ -128,7 +135,7 @@ def collision(xt, m, q, yo1, yo2, yo3, xo1, xo2, xo3, angle):
             n += 1
         if yo3 <= m*xo3 + q:
             a += 1
-            b += "3"
+            b += "3 "
             n += 1
     return a, b
         
@@ -212,27 +219,33 @@ while 1:
 
     check_collision(m2, q2, x, y, x3, y3, x4, y4)
 
+    # linea 3
+    m3, q3 = retta(x4, y4, x2, y2)
+
+    check_collision(m3, q3, x, y, x4, y4, x2, y2)
+
     # ostacolo
     triangle((xo1, yo1), (xo2, yo2), (xo3, yo3))
 
     # prima linea primo ostacolo
-    m3, q3 = retta(xo1, yo1, xo2, yo2)
+    m4, q4 = retta(xo1, yo1, xo2, yo2)
 
-    check_collision(m3, q3, x, y, xo1, yo1, xo2, yo2)
+    check_collision(m4, q4, x, y, xo1, yo1, xo2, yo2)
 
     # seconda linea primo ostacolo
-    m4, q4 = retta(xo2, yo2, xo3, yo3)
+    m5, q5 = retta(xo2, yo2, xo3, yo3)
 
-    check_collision(m4, q4, x, y, xo2, yo2, xo3, yo3)
+    check_collision(m5, q5, x, y, xo2, yo2, xo3, yo3)
 
     # terza linea primo ostacolo
-    m5, q5 = retta(xo3, yo3, xo1, yo1)
+    m6, q6 = retta(xo3, yo3, xo1, yo1)
 
-    check_collision(m5, q5, x, y, xo3, yo3, xo1, yo1)
+    check_collision(m6, q6, x, y, xo3, yo3, xo1, yo1)
     
-    a, b = collision(x2, m1, q1, yo1, yo2, yo3, xo1, xo2, xo3, angle1)
-    if a > 0:
-        print(str(n) + " " + str(a) + " " + b)
+    a1, b1 = collision(m1, q1, yo1, yo2, yo3, xo1, xo2, xo3, angle1)
+
+    if a1 > 0:
+        print(str(n) + " " + str(a1) + " " + str(b1))
         print(angle1)
     
     pygame.display.update() 
