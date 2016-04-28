@@ -87,7 +87,7 @@ dy = 0
 
 def rotation(x, y, angle, r, x1, y1): # definisco funzione rotation 
 
-    angle += 1
+    angle += 2
 
     if angle > 360: # stop a 360° torna indetro 
         angle -= 360
