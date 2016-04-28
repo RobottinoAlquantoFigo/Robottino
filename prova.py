@@ -63,7 +63,7 @@ angle8 = math.degrees(math.atan(-r2c/r2l))
 n = 0 # contatore a caso
 
 pixAr = pygame.PixelArray(screen) # creazione punto
-pixAr[x][y] = (255, 255, 255)
+pixAr[x][y] = (240, 155, 200)
 
 dx = 0 # spostamento punto
 dy = 0
@@ -82,9 +82,9 @@ def rotation(x, y, angle, r, x1, y1): # definisco funzione rotation
 
 def triangle(x, y, z): # definisco funzione triangle
     # creo un triangolo
-    line1 = pygame.draw.line(screen, (255, 255, 255), (x), (y), 1)
-    line2 = pygame.draw.line(screen, (255, 255, 255), (y), (z), 1)
-    line3 = pygame.draw.line(screen, (255, 255, 255), (z), (x), 1)
+    line1 = pygame.draw.line(screen, (0, 255, 255), (x), (y), 1)
+    line2 = pygame.draw.line(screen, (0, 255, 255), (y), (z), 1)
+    line3 = pygame.draw.line(screen, (0, 255, 255), (z), (x), 1)
 
 def retta(x1, y1, x2, y2):
     
@@ -179,22 +179,22 @@ while 1:
     x0 = (x4+x5)/2
     y0 = (y4+y5)/2
     
-    pixAr[x][y] = (255, 255, 255)# disegna il punto 
+    pixAr[x][y] = (125, 205, 245)# disegna il punto 
 
     # disegno le linee del primo braccio (colore cordinate spessore)
-    pygame.draw.line(screen, (255, 255, 255), (x2, y2), (x3, y3), 1)
-    pygame.draw.line(screen, (255, 255, 255), (x2, y2), (x4, y4), 1)
-    pygame.draw.line(screen, (255, 255, 255), (x3, y3), (x5, y5), 1)
-    pygame.draw.line(screen, (255, 255, 255), (x4, y4), (x5, y5), 1)
-    pygame.draw.line(screen, (255, 255, 255), (x4, y4), (x3, y3), 1)
+    pygame.draw.line(screen, (255, 0, 255), (x2, y2), (x3, y3), 1)
+    pygame.draw.line(screen, (255, 0, 255), (x2, y2), (x4, y4), 1)
+    pygame.draw.line(screen, (255, 0, 255), (x3, y3), (x5, y5), 1)
+    pygame.draw.line(screen, (255, 0, 255), (x4, y4), (x5, y5), 1)
+    pygame.draw.line(screen, (255, 0, 255), (x4, y4), (x3, y3), 1)
 
     # disegno le linne del secondo braccio (colore cordinate spessore)
     
-    pygame.draw.line(screen, (255, 255, 255), (x6, y6), (x7, y7), 1)
-    pygame.draw.line(screen, (255, 255, 255), (x6, y6), (x8, y8), 1)
-    pygame.draw.line(screen, (255, 255, 255), (x7, y7), (x9, y9), 1)
-    pygame.draw.line(screen, (255, 255, 255), (x8, y8), (x9, y9), 1)
-    pygame.draw.line(screen, (255, 255, 255), (x8, y8), (x7, y7), 1)
+    pygame.draw.line(screen, (0, 255, 255), (x6, y6), (x7, y7), 1)
+    pygame.draw.line(screen, (0, 255, 255), (x6, y6), (x8, y8), 1)
+    pygame.draw.line(screen, (0, 255, 255), (x7, y7), (x9, y9), 1)
+    pygame.draw.line(screen, (0, 255, 255), (x8, y8), (x9, y9), 1)
+    pygame.draw.line(screen, (0, 255, 255), (x8, y8), (x7, y7), 1)
     
     if angle5 == 360: # se la seconda linea completa un giro
         x2, y2, angle1 = rotation(x2, y2, angle1, r1c, x1, y1)
@@ -249,6 +249,6 @@ while 1:
         print(angle1)
     
     pygame.display.update() 
-    screen.fill((0, 0, 0))
+    screen.fill((255,255,255))
 
     clock.tick(100) # fps
