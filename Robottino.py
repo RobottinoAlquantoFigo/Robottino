@@ -87,7 +87,7 @@ dy = 0
 
 def rotation(x, y, angle, r, x1, y1): # definisco funzione rotation 
 
-    angle += 2
+    angle += 1
 
     if angle > 360: # stop a 360° torna indetro 
         angle -= 360
@@ -266,6 +266,6 @@ while 1:
         print(angle1)
     
     pygame.display.update() 
-    screen.fill(VerdeForesta)
+    screen.fill(Arancione)
 
     clock.tick(100) # fps
