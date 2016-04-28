@@ -266,6 +266,6 @@ while 1:
         print(angle1)
     
     pygame.display.update() 
-    screen.fill(Arancione)
+    screen.fill(VerdeForesta)
 
     clock.tick(100) # fps
